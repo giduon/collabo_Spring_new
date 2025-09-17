@@ -10,19 +10,19 @@ public class Element {
     private String name ;
     private int price;
     private String category ;
-    private int sotck;
+    private int stock;
     private String image ;
     private String description ;
 
     public Element() {
     }
 
-    public Element(int id, String name, int price, String category, int sotck, String image, String description) {
+    public Element(int id, String name, int price, String category, int stock, String image, String description) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
-        this.sotck = sotck;
+        this.stock = stock;
         this.image = image;
         this.description = description;
     }
