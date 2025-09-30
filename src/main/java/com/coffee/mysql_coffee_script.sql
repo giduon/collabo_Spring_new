@@ -65,18 +65,64 @@ select * from products where product_id = 62 ;
 
 delete from products ;
 commit ;
-----------------------------------------
+-----------------------------------------------------------------
+-- 카트 세션
+----------------------------------------------------------------- 
+desc carts ;
 
+select * from carts ;
+-----------------------------------------------------------------
+-- 카트 상품 세션
+----------------------------------------------------------------- 
+desc cart_products ;
 
+select * from cart_products ;
 
+-- 연관 관계를 맺고 있어서, 삭제시 순서가 필요합니다.
+drop tables cart_products;
+drop tables carts;
+-----------------------------------------------------------------
+-- 장바구니 담기 테스트 시나리오
+-----------------------------------------------------------------
+-- 로그인할 사람의 id를 확인하세요.
+select * from members ;
 
+-- 장바구니에 담을 상품의 id를 확인하세요.
+select * from products order by product_id desc ;
 
+-- 카트 정보 조인하기
+select m.member_id, m.name, c.cart_id, cp.cart_product_id, cp.product_id, cp.quantity, p.name, p.price, p.stock
+from ((members m join carts c
+on m.member_id = c.member_id) join cart_products cp
+on c.cart_id = cp.cart_id) join products p
+on cp.product_id = p.product_id ;
 
+delete from cart_Products;
+delete from cart;
+commit;
+-----------------------------------------------------------------
+-- 주문 세션
+----------------------------------------------------------------- 
+desc orders ;
 
+select * from orders ;
+-----------------------------------------------------------------
+-- 주문 상품 세션
+----------------------------------------------------------------- 
+desc order_products ;
 
+select * from order_products ;
+--------------------------------------------------------------------------------------
+-- 누가 무슨 상품을 주문했나요?
 
+select m.member_id, m.name, o.order_id, op.product_id, op.quantity, p.name, p.price 
+from ((members m join orders o 
+on m.member_id = o.member_id) join order_products op
+on o.order_id = op.order_id) join products p
+on op.product_id = p.product_id ;
+--------------------------------------------------------------------------------------
 
-
+select * from products where image like '%bigs%';
 
 
 
